@@ -17,7 +17,7 @@
     display: inline-block; background: rgba(255,255,255,0.2);
     padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; margin-top: 12px; margin-right: 6px;
   }
-  main { max-width: 900px; margin: 40px auto; padding: 0 24px 60px; }
+  main { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
   h2 { font-size: 1.0rem; color: #636e72; text-transform: uppercase;
        letter-spacing: 0.08em; margin-bottom: 20px; margin-top: 40px;
        border-bottom: 2px solid #dfe6e9; padding-bottom: 8px; }
@@ -33,6 +33,8 @@
   .card.green  { border-left-color: #27ae60; }
   .card.orange { border-left-color: #e67e22; }
   .card.purple { border-left-color: #8e44ad; }
+  .card.red    { border-left-color: #e74c3c; }
+  .card.teal   { border-left-color: #00b894; }
   .card-tag {
     display: inline-block; font-size: 0.72rem; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.06em;
@@ -42,12 +44,17 @@
   .card.green  .card-tag { background: #eafaf1; color: #27ae60; }
   .card.orange .card-tag { background: #fef9ef; color: #e67e22; }
   .card.purple .card-tag { background: #f5eefb; color: #8e44ad; }
+  .card.red    .card-tag { background: #fdeaea; color: #e74c3c; }
+  .card.teal   .card-tag { background: #e8faf6; color: #00b894; }
   .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
   .card p  { font-size: 0.88rem; color: #636e72; line-height: 1.6; }
   .card .arrow { display: inline-block; margin-top: 16px; font-size: 0.85rem; color: #3498db; font-weight: 600; }
   .card.green  .arrow { color: #27ae60; }
   .card.orange .arrow { color: #e67e22; }
   .card.purple .arrow { color: #8e44ad; }
+  .card.red    .arrow { color: #e74c3c; }
+  .card.teal   .arrow { color: #00b894; }
+  .section-date { font-size: 0.82rem; color: #b2bec3; margin-top: -12px; margin-bottom: 16px; }
   footer { text-align: center; padding: 24px; font-size: 0.82rem; color: #b2bec3; }
   footer a { color: #b2bec3; }
 </style>
@@ -55,13 +62,70 @@
 <body>
 <header>
   <h1>Human RV EC — TCF4 解析レポート</h1>
-  <p>pySCENIC regulon解析 &times; HUVEC TCF4 OE/KD 一致性解析</p>
+  <p>Mouse PAB / Human RV Cross-species TCF4 regulon解析</p>
   <span class="badge">KTonai103 / 大阪大学心臓血管外科</span>
   <span class="badge">2026年3月</span>
 </header>
 <main>
 
-  <h2>パイプライン解析レポート</h2>
+  <h2>Cross-Species統合解析 (2026-03-08)</h2>
+  <p class="section-date">Phase 7-13 + Phase 11: Mouse PAB Bifurcation, Human RV Trajectory, Cross-species Integration</p>
+  <div class="cards">
+    <a class="card red" href="report_crossspecies_summary.html">
+      <span class="card-tag">Cross-Species Summary</span>
+      <h3>Cross-Species統合レポート (Phase 7-13)</h3>
+      <p>Mouse PAB Bifurcation + Human RV Trajectory + Cross-species Integration の全体像。Evidence convergence 6/10 concordant。Acute Uniform vs Chronic Selective モデル。図付き。</p>
+      <span class="arrow">レポートを開く →</span>
+    </a>
+    <a class="card orange" href="report_trajectory_comparison.html">
+      <span class="card-tag">Trajectory Comparison</span>
+      <h3>Mouse vs Human Trajectory比較</h3>
+      <p>Mouse PABとHuman RVのBifurcation解析の詳細比較。Branch composition, TCF4 scores, Target genes, 統合モデル。</p>
+      <span class="arrow">レポートを開く →</span>
+    </a>
+    <a class="card teal" href="report_phase11_integration.html">
+      <span class="card-tag">Phase 11</span>
+      <h3>Cross-Species Integration詳細</h3>
+      <p>TCF4 regulon overlap (0/18), DEG cross-mapping (Spearman r=0.127), Evidence convergence table, GO term overlap。</p>
+      <span class="arrow">レポートを開く →</span>
+    </a>
+    <a class="card green" href="report_human_bifurcation.html">
+      <span class="card-tag">Human Bifurcation</span>
+      <h3>Human EC Bifurcation詳細レポート</h3>
+      <p>scFates ElPiGraph (30 nodes), Star topology, Compensated/Decompensated bifurcation (Chi2 p=8e-236)。APLNR log2FC=+1.94。</p>
+      <span class="arrow">レポートを開く →</span>
+    </a>
+  </div>
+
+  <h2>解析ノートブック (2026-03-07/08)</h2>
+  <div class="cards">
+    <a class="card" href="notebook_phase7.html">
+      <span class="card-tag">Phase 7 Notebook</span>
+      <h3>Sham Signature構築</h3>
+      <p>Mouse PAB Vascular EC Sham signature。Ambient CM RNA除去 (EC/CM ratio filter)、Approach B→C。</p>
+      <span class="arrow">ノートブックを開く →</span>
+    </a>
+    <a class="card" href="notebook_phase8.html">
+      <span class="card-tag">Phase 8 Notebook</span>
+      <h3>Mouse-Human Ortholog変換</h3>
+      <p>Ensembl BioMart 17,085 1:1 orthologs。Sham signature 93/100変換、TCF4 targets 18/18変換、Cross-species overlap検定。</p>
+      <span class="arrow">ノートブックを開く →</span>
+    </a>
+    <a class="card" href="notebook_phase9.html">
+      <span class="card-tag">Phase 9 Notebook</span>
+      <h3>Human EC Trajectory (scFates)</h3>
+      <p>Diffusion Map → ElPiGraph → pseudotime + Branch bifurcation。Option B root定義、Star topology。</p>
+      <span class="arrow">ノートブックを開く →</span>
+    </a>
+    <a class="card" href="notebook_phase10.html">
+      <span class="card-tag">Phase 10 Notebook</span>
+      <h3>Human Pseudobulk DE (PyDESeq2)</h3>
+      <p>Reduced vs Preserved pseudobulk DE。APLNR (LFC=+1.73, padj=0.011)、SMAD7 (padj=0.00016)。GSEA NES=1.72。</p>
+      <span class="arrow">ノートブックを開く →</span>
+    </a>
+  </div>
+
+  <h2>パイプライン解析レポート (2026-03-06)</h2>
   <div class="cards">
     <a class="card orange" href="pipeline_report.html">
       <span class="card-tag">Full Pipeline</span>
@@ -77,7 +141,7 @@
     </a>
   </div>
 
-  <h2>一致性解析レポート</h2>
+  <h2>一致性解析レポート (2026-03-06)</h2>
   <div class="cards">
     <a class="card purple" href="index_consistency.html">
       <span class="card-tag">Consistency Analysis</span>
@@ -95,7 +159,7 @@
 
 </main>
 <footer>
-  Generated 2026-03-06 &middot; <a href="https://github.com/KTonai103/tcf4-rv-ec-analysis">GitHub Repository</a>
+  Updated 2026-03-08 &middot; <a href="https://github.com/KTonai103/tcf4-rv-ec-analysis">GitHub Repository</a>
 </footer>
 </body>
 </html>
