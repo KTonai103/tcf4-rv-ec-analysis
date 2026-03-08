@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCF4 (E2-2/ITF2) Comprehensive Review - Presentation</title>
+<style>
+  :root {
+    --primary: #1a365d;
+    --accent: #e53e3e;
+    --rv-color: #3182ce;
+    --lv-color: #d69e2e;
+    --shared-color: #38a169;
+    --novel-color: #805ad5;
+    --neuro-color: #319795;
+    --immune-color: #d53f8c;
+    --cancer-color: #e53e3e;
+    --ec-color: #3182ce;
+    --bg: #f7fafc;
+    --card-bg: #ffffff;
+    --text: #2d3748;
+    --muted: #718096;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .slide { display: none; min-height: 100vh; padding: 40px 60px; animation: fadeIn 0.4s ease; }
+  .slide.active { display: flex; flex-direction: column; justify-content: center; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .title-slide { background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #2b6cb0 100%); color: white; text-align: center; align-items: center; }
+  .title-slide h1 { font-size: 2.4em; margin-bottom: 0.3em; font-weight: 700; letter-spacing: -0.02em; }
+  .title-slide .subtitle { font-size: 1.2em; opacity: 0.9; margin-bottom: 1.5em; }
+  .title-slide .meta { font-size: 0.95em; opacity: 0.7; }
+  .title-slide .key-finding { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 20px 36px; margin-top: 1.5em; font-size: 1em; max-width: 900px; text-align: left; line-height: 1.7; }
+
+  .content-slide { max-width: 1100px; margin: 0 auto; width: 100%; }
+  .slide-header { border-bottom: 3px solid var(--primary); padding-bottom: 12px; margin-bottom: 24px; }
+  .slide-header h2 { font-size: 1.7em; color: var(--primary); }
+  .slide-header .slide-num { font-size: 0.85em; color: var(--muted); float: right; margin-top: 8px; }
+
+  .card-row { display: flex; gap: 18px; margin-bottom: 20px; flex-wrap: wrap; }
+  .card { background: var(--card-bg); border-radius: 10px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); flex: 1; min-width: 260px; }
+  .card h3 { font-size: 1.05em; margin-bottom: 10px; color: var(--primary); }
+  .card.ec { border-left: 4px solid var(--ec-color); }
+  .card.neuro { border-left: 4px solid var(--neuro-color); }
+  .card.immune { border-left: 4px solid var(--immune-color); }
+  .card.cancer { border-left: 4px solid var(--cancer-color); }
+  .card.highlight { border: 2px solid var(--accent); background: #fff5f5; }
+  .card.rv-card { border: 2px solid var(--rv-color); background: #ebf8ff; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .stat-box { background: var(--card-bg); border-radius: 10px; padding: 16px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .stat-box .label { font-size: 0.78em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-box .value { font-size: 1.8em; font-weight: 700; margin: 4px 0; }
+  .stat-box .sub { font-size: 0.82em; color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+  th { background: var(--primary); color: white; padding: 9px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+  tr:hover { background: #edf2f7; }
+
+  .conclusion-box { background: linear-gradient(135deg, #ebf8ff 0%, #e6fffa 100%); border-left: 5px solid var(--rv-color); border-radius: 8px; padding: 20px 26px; margin: 16px 0; font-size: 1em; }
+  .conclusion-box h3 { color: var(--primary); margin-bottom: 8px; }
+  .conclusion-box li { margin-bottom: 5px; }
+
+  .annotation { background: #fffbeb; border-left: 4px solid var(--lv-color); padding: 10px 16px; border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.9em; }
+  .annotation.blue { background: #ebf8ff; border-left-color: var(--ec-color); }
+  .annotation.purple { background: #faf5ff; border-left-color: var(--novel-color); }
+  .annotation.red { background: #fff5f5; border-left-color: var(--accent); }
+  .annotation.green { background: #f0fff4; border-left-color: var(--shared-color); }
+
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.76em; font-weight: 600; margin-right: 4px; }
+  .tag.ec { background: #bee3f8; color: #2b6cb0; }
+  .tag.neuro { background: #b2f5ea; color: #234e52; }
+  .tag.immune { background: #fed7e2; color: #97266d; }
+  .tag.cancer { background: #fed7d7; color: #9b2c2c; }
+  .tag.rv { background: #bee3f8; color: #2b6cb0; }
+  .tag.gap { background: #fefcbf; color: #975a16; }
+
+  .section-divider { background: linear-gradient(135deg, var(--primary) 0%, #2a4a7f 100%); color: white; text-align: center; align-items: center; }
+  .section-divider h2 { font-size: 2.2em; margin-bottom: 0.3em; }
+  .section-divider p { font-size: 1.1em; opacity: 0.8; }
+  .section-divider.ec { background: linear-gradient(135deg, #2b6cb0 0%, #3182ce 100%); }
+  .section-divider.neuro { background: linear-gradient(135deg, #234e52 0%, #319795 100%); }
+  .section-divider.disease { background: linear-gradient(135deg, #742a2a 0%, #c53030 100%); }
+
+  .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 0; margin: 16px 0; flex-wrap: wrap; }
+  .flow-box { background: var(--card-bg); border-radius: 10px; padding: 14px 18px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.1); min-width: 140px; font-size: 0.88em; }
+  .flow-box.neg { border: 2px solid var(--accent); background: #fff5f5; }
+  .flow-box.pos { border: 2px solid var(--shared-color); background: #f0fff4; }
+  .flow-box.neu { border: 2px solid var(--ec-color); background: #ebf8ff; }
+  .flow-arrow { font-size: 1.6em; color: var(--muted); padding: 0 6px; }
+
+  .domain-bar { display: flex; height: 44px; border-radius: 8px; overflow: hidden; margin: 12px 0; font-size: 0.8em; font-weight: 600; color: white; }
+  .domain-bar > div { display: flex; align-items: center; justify-content: center; padding: 0 8px; }
+
+  .nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-top: 1px solid #e2e8f0; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+  .nav button { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 6px; font-size: 0.95em; cursor: pointer; transition: background 0.2s; }
+  .nav button:hover { background: #2a4a7f; }
+  .nav button:disabled { background: #cbd5e0; cursor: default; }
+  .nav .progress { font-size: 0.85em; color: var(--muted); }
+  .nav .dots { display: flex; gap: 5px; flex-wrap: wrap; max-width: 400px; justify-content: center; }
+  .nav .dot { width: 9px; height: 9px; border-radius: 50%; background: #cbd5e0; cursor: pointer; transition: background 0.2s; }
+  .nav .dot.active { background: var(--primary); }
+
+  @media (max-width: 768px) { .slide { padding: 24px 20px; } .stat-grid { grid-template-columns: 1fr; } .card-row { flex-direction: column; } .title-slide h1 { font-size: 1.6em; } .flow-diagram { flex-direction: column; } .flow-arrow { transform: rotate(90deg); } }
+  ul { padding-left: 1.3em; }
+  li { margin-bottom: 4px; }
+  strong.up { color: var(--accent); }
+  strong.down { color: var(--ec-color); }
+</style>
+</head>
+<body>
+
+<!-- ===== SLIDE 0: Title ===== -->
+<div class="slide title-slide active" id="slide-0">
+  <h1>TCF4 (E2-2 / ITF2)<br>包括的レビュー</h1>
+  <div class="subtitle">RV心不全内皮細胞リモデリングにおけるTCF4の役割を理解するための文献調査</div>
+  <div class="key-finding">
+    <strong>TCF4</strong> = bHLH転写因子 (18q21.2) &mdash; E2-2, ITF2 とも呼ばれる<br>
+    神経・免疫・内皮・がんにまたがる<strong>多面的ハブ型TF</strong><br>
+    心臓ECでの役割は2025年に初めて証明 (Xian et al. <em>NAR</em>) &rarr; <strong>RVでは本プロジェクトが世界初</strong>
+  </div>
+  <div class="meta" style="margin-top:1.5em;">
+    2026-03-08 &nbsp;|&nbsp; 16本のPDF精読 + Web検索による統合レビュー<br>
+    <span style="opacity:0.7; font-size:0.9em;">&#9888; TCF4 (bHLH, 18q21.2) &ne; TCF7L2 (Wnt, 10q25.3, 旧称"Tcf-4")</span>
+  </div>
+</div>
+
+<!-- ===== SLIDE 1: Gene Basics ===== -->
+<div class="slide" id="slide-1">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">1 / 15</span>
+      <h2>1. 遺伝子・タンパク質の基本情報</h2>
+    </div>
+
+    <div class="stat-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="stat-box" style="border-top:4px solid var(--primary);">
+        <div class="label">Gene ID</div>
+        <div class="value" style="color:var(--primary);">6925</div>
+        <div class="sub">18q21.2</div>
+      </div>
+      <div class="stat-box" style="border-top:4px solid var(--neuro-color);">
+        <div class="label">ファミリー</div>
+        <div class="value" style="color:var(--neuro-color); font-size:1.2em;">Class I bHLH</div>
+        <div class="sub">E-protein</div>
+      </div>
+      <div class="stat-box" style="border-top:4px solid var(--novel-color);">
+        <div class="label">アイソフォーム</div>
+        <div class="value" style="color:var(--novel-color);">18種</div>
+        <div class="sub">N末端多様性</div>
+      </div>
+      <div class="stat-box" style="border-top:4px solid var(--shared-color);">
+        <div class="label">構造特性</div>
+        <div class="value" style="color:var(--shared-color); font-size:1em;">IDR Hub TF</div>
+        <div class="sub">天然変性領域豊富</div>
+      </div>
+    </div>
+
+    <p style="font-weight:600; margin-bottom:10px;">タンパク質ドメイン構造 (N &rarr; C)</p>
+    <div class="domain-bar">
+      <div style="background:#805ad5; flex:2;">AD1</div>
+      <div style="background:#d69e2e; flex:1;">NLS</div>
+      <div style="background:#38a169; flex:2;">AD2</div>
+      <div style="background:#e53e3e; flex:2;">bHLH</div>
+    </div>
+    <div style="display:flex; gap:12px; font-size:0.82em; color:var(--muted); margin-bottom:16px;">
+      <span><span style="color:#805ad5;">&#9632;</span> AD1: p300/CBP結合 (長鎖のみ)</span>
+      <span><span style="color:#d69e2e;">&#9632;</span> NLS: 核移行</span>
+      <span><span style="color:#38a169;">&#9632;</span> AD2: 活性化</span>
+      <span><span style="color:#e53e3e;">&#9632;</span> bHLH: DNA結合・二量体化</span>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <h3>主要アイソフォーム</h3>
+        <table>
+          <tr><th>型</th><th>ドメイン</th><th>特徴</th></tr>
+          <tr><td><strong>TCF4-B</strong> (長鎖)</td><td>AD1+NLS+AD2+bHLH</td><td>最高転写活性; SOX11結合; 遊走促進</td></tr>
+          <tr><td><strong>TCF4-A</strong> (中間)</td><td>NLS+AD2+bHLH</td><td>AD1欠損</td></tr>
+          <tr><td><strong>TCF4-C</strong> (短鎖)</td><td>bHLH のみ</td><td>AD1・AD2欠損</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>同ファミリー</h3>
+        <ul>
+          <li><strong>TCF3</strong> (E2A &rarr; E12/E47)</li>
+          <li><strong>TCF12</strong> (HEB)</li>
+        </ul>
+        <p style="margin-top:12px; font-size:0.88em;">結合モチーフ: <strong>E-box (CANNTG)</strong></p>
+        <ul style="font-size:0.88em;">
+          <li>ホモ二量体: 転写抑制</li>
+          <li>ヘテロ二量体 (Class II): 転写活性化</li>
+          <li>5caC DNA に優先的結合</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2: Molecular Function ===== -->
+<div class="slide" id="slide-2">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">2 / 15</span>
+      <h2>2. 分子機能: 二量体化パートナー &amp; クロマチン</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <h3>bHLH パートナー (実験確認済み)</h3>
+        <table>
+          <tr><th>パートナー</th><th>コンテキスト</th></tr>
+          <tr><td><strong>HAND2</strong></td><td style="color:var(--accent);">心臓/神経堤発生 &larr; RV特異性の鍵</td></tr>
+          <tr><td><strong>TWIST1</strong></td><td style="color:var(--accent);">EMT &larr; 心臓線維症マスター因子</td></tr>
+          <tr><td><strong>ASCL1</strong></td><td>神経前駆細胞分化</td></tr>
+          <tr><td><strong>NEUROD1/2</strong></td><td>神経分化</td></tr>
+          <tr><td><strong>SCL/TAL1</strong></td><td>造血</td></tr>
+          <tr><td><strong>Id1/2/3/4</strong></td><td>ドミナントネガティブ阻害</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>非bHLHパートナー &amp; クロマチン複合体</h3>
+        <table>
+          <tr><th>パートナー</th><th>種類</th></tr>
+          <tr><td>FOXG1, SOX11, CUX1, POU3F3</td><td>TFパートナー</td></tr>
+          <tr><td>SWI/SNF (BRG1)</td><td>クロマチンリモデリング</td></tr>
+          <tr><td>NuRD (HDAC1/2)</td><td>脱アセチル化</td></tr>
+          <tr><td>EP300/CBP</td><td>アセチル化 (共活性化)</td></tr>
+          <tr><td>LSD1</td><td>脱メチル化</td></tr>
+        </table>
+        <div class="annotation blue" style="margin-top:10px; margin-bottom:0;">
+          TCF4 KO後に活性化されたregulon の<strong>96.3%が非bHLH TF</strong> (SCENIC; Wittmann 2021) &rarr; E-box を超える制御
+        </div>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card" style="flex:1;">
+        <h3>翻訳後制御</h3>
+        <ul>
+          <li><strong>Ca2+/Calmodulin</strong>: basic領域に結合 &rarr; DNA結合を阻害 (活動依存的)</li>
+          <li><strong>miR-137</strong>: 3'UTRを標的; 統合失調症リスク遺伝子</li>
+          <li><strong>ETO</strong>: 共抑制因子</li>
+        </ul>
+      </div>
+      <div class="card rv-card" style="flex:1.5;">
+        <h3>本プロジェクトへの示唆</h3>
+        <ul>
+          <li><strong>HAND2</strong>: RV発生に必須のTF &rarr; TCF4-HAND2二量体がRV特異性の分子基盤</li>
+          <li><strong>TWIST1</strong>: EndMTマスター因子 &rarr; TCF4-TWIST1相互作用がEndMT制御</li>
+          <li><strong>Id蛋白</strong>: 圧負荷RVでId阻害が変動 &rarr; TCF4活性の調節</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3: Neurodevelopment ===== -->
+<div class="slide" id="slide-3">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">3 / 15</span>
+      <h2>3. 発生・発達における役割</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card neuro">
+        <h3><span class="tag neuro">神経</span> 神経発生</h3>
+        <table>
+          <tr><th>機能</th><th>詳細</th></tr>
+          <tr><td>神経前駆細胞制御</td><td>KO &rarr; 海馬異常, 542遺伝子の変動</td></tr>
+          <tr><td>神経突起形態</td><td>Neurexin (Nrxn1) 抑制を介して樹状突起制御</td></tr>
+          <tr><td>交連発生</td><td>KO &rarr; 脳梁/前交連/海馬交連の完全喪失</td></tr>
+          <tr><td>シナプス制限</td><td>Neurexin抑制 &rarr; 過剰シナプス形成を防止</td></tr>
+        </table>
+        <p style="font-size:0.82em; color:var(--muted); margin-top:8px;">種間保存: <em>Drosophila</em> Daughterless = TCF4ホモログ</p>
+      </div>
+      <div class="card">
+        <h3><span class="tag immune">免疫</span> <span class="tag ec">中胚葉</span></h3>
+        <div style="margin-bottom:12px;">
+          <p style="font-weight:600;">免疫系発生</p>
+          <ul>
+            <li>pDC (形質細胞様樹状細胞) のマスターレギュレーター</li>
+            <li>B細胞・T細胞の発生にも関与</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-weight:600;">中胚葉・EMT</p>
+          <ul>
+            <li>中胚葉で発現、胚性上皮には欠如</li>
+            <li>EMT誘導因子としての発生学的役割</li>
+            <li>Snail1, Snail2, E47の下流ターゲット</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotation">
+      <strong>多面性</strong>: TCF4は神経・免疫・中胚葉の全てで重要な役割を持つ。この多面性がIDRハブ型構造と多数の二量体化パートナーに起因する。内皮細胞での役割は2025年まで未解明だった。
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 4: Disease - PTHS, SZ, FECD ===== -->
+<div class="slide" id="slide-4">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">4 / 15</span>
+      <h2>4. 疾患との関連 (1): PTHS, 統合失調症, FECD</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <h3>Pitt-Hopkins症候群 (PTHS)</h3>
+        <ul>
+          <li><strong>メカニズム</strong>: TCF4ハプロ不全</li>
+          <li>重度知的障害, 言語欠如, 特徴的顔貌</li>
+          <li>変異の大半がbHLHドメインに集中</li>
+          <li style="color:var(--accent);">心臓表現型: <strong>報告なし</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>統合失調症</h3>
+        <ul>
+          <li>GWAS有意: rs9960767 (<strong>P=4.1&times;10<sup>-9</sup></strong>)</li>
+          <li>内表現型: PPI障害, 聴覚抑制低下</li>
+          <li>miR-137との制御フィードバック</li>
+          <li>遺伝子-環境相互作用</li>
+        </ul>
+      </div>
+      <div class="card highlight">
+        <h3>Fuchs角膜内皮ジストロフィー (FECD)</h3>
+        <ul>
+          <li>CTG三塩基反復伸長 (<strong>P=1.56&times;10<sup>-82</sup></strong>)</li>
+          <li>米国FECD患者の<strong>70-75%</strong>に検出</li>
+          <li>TCF4-B OE: <strong>疾患ECのみ</strong>遊走促進</li>
+          <li>メカニズム: TUBB4A &uarr; (EMT非依存)</li>
+        </ul>
+        <div class="annotation red" style="margin-bottom:0; margin-top:8px;">
+          疾患ECでのみ効果 &rarr; <strong>Context-dependent</strong> = 本プロジェクトと一致
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 5: Disease - Cancer ===== -->
+<div class="slide" id="slide-5">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">5 / 15</span>
+      <h2>4. 疾患との関連 (2): がん &amp; 心臓GWAS</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card cancer">
+        <h3><span class="tag cancer">がん</span> 神経芽腫</h3>
+        <ul>
+          <li>ADRN・MES両状態で必須</li>
+          <li>HDAC2/SKP1リクルート &rarr; MYCライセンシング</li>
+          <li>KD: G1停止, アポトーシス</li>
+          <li>ChIP-seq: E2Fモチーフ濃縮</li>
+        </ul>
+        <p style="font-size:0.82em; color:var(--muted);">Aljouda et al. 2025 <em>Mol Oncol</em></p>
+      </div>
+      <div class="card cancer">
+        <h3><span class="tag cancer">がん</span> メラノーマ</h3>
+        <ul>
+          <li>MES状態の<strong>マスターレギュレーター</strong></li>
+          <li>免疫チェックポイント阻害薬の耐性に関与</li>
+          <li><strong>BRD4阻害薬</strong>でTCF4を標的化可能</li>
+        </ul>
+        <p style="font-size:0.82em; color:var(--muted);">Pozniak et al. 2024 <em>Cell</em></p>
+      </div>
+      <div class="card cancer">
+        <h3><span class="tag cancer">がん</span> 大腸がん</h3>
+        <ul>
+          <li>ITF2 = &beta;-catenin-TCF7L2の競合阻害因子</li>
+          <li>腫瘍進行でITF2低下</li>
+          <li>ITF2自体がWnt標的 (負のFB)</li>
+        </ul>
+        <p style="font-size:0.82em; color:var(--muted);">Shin et al. 2014 <em>Gastroenterology</em></p>
+      </div>
+    </div>
+
+    <div class="conclusion-box">
+      <h3><span class="tag gap">Gap</span> 心臓疾患GWASにおけるTCF4</h3>
+      <ul>
+        <li>心臓線維症、心不全、心房細動のGWAS: <strong>TCF4は未出現</strong></li>
+        <li>一方で2025年にXian et al.が心臓ECでの重要性を実験的に証明</li>
+        <li>&rarr; <strong>本プロジェクトがこのギャップを埋める</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 6: Section Divider - EC Biology ===== -->
+<div class="slide section-divider ec" id="slide-6">
+  <h2>内皮細胞・血管生物学</h2>
+  <p>TCF4の内皮細胞における役割 &mdash; 本プロジェクトの核心</p>
+  <p style="margin-top:1em; font-size:0.9em; opacity:0.7;">Xian 2025 &bull; Tanaka 2010 &bull; Tip Cell &bull; SSc &bull; FECD</p>
+</div>
+
+<!-- ===== SLIDE 7: EC Biology ===== -->
+<div class="slide" id="slide-7">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">7 / 15</span>
+      <h2>5. 内皮細胞における5つの知見</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card ec" style="flex:1.2;">
+        <h3>1. EndMT抑制 &amp; EC Identity維持</h3>
+        <p style="font-size:0.85em;"><strong>Xian et al. (2025) <em>NAR</em></strong> &mdash; 最重要論文</p>
+        <ul style="font-size:0.88em;">
+          <li>TCF4 KD &rarr; EC marker &darr; + 間葉系marker &uarr;</li>
+          <li>TGF&beta;経路プロモーターに直接結合して抑制</li>
+          <li>TCF4-TGF&beta;フィードバックループ発見</li>
+          <li>LV心不全患者EC: TCF4有意に低下 + OE rescue</li>
+        </ul>
+      </div>
+      <div class="card ec">
+        <h3>2. 抗血管新生</h3>
+        <p style="font-size:0.85em;"><strong>Tanaka et al. (2010) <em>Blood</em></strong></p>
+        <ul style="font-size:0.88em;">
+          <li>E2-2 = Id1の結合パートナー</li>
+          <li>EC遊走・増殖・管腔形成を<strong>阻害</strong></li>
+          <li>VEGFR2 (Flk1) プロモーター抑制</li>
+          <li>Id+SCL &rarr; E2-2隔離 &rarr; Flk1脱抑制</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card ec">
+        <h3>3. Tip Cell TF</h3>
+        <p style="font-size:0.85em;">Wakabayashi (2023) / Huang (2024)</p>
+        <ul style="font-size:0.88em;">
+          <li>腫瘍tip ECに濃縮 (SOX4, SMAD1と)</li>
+          <li>種・疾患・条件を超えて保存</li>
+          <li>SSc皮膚ECでも同定</li>
+        </ul>
+      </div>
+      <div class="card ec">
+        <h3>4. SSc内皮障害</h3>
+        <p style="font-size:0.85em;">Huang (2024) <em>Ann Rheum Dis</em></p>
+        <ul style="font-size:0.88em;">
+          <li>scRNA-seq + snATAC-seq</li>
+          <li><strong>APLNR</strong> = EC傷害マーカー</li>
+          <li>本プロジェクトのAPLNRと直結</li>
+        </ul>
+      </div>
+      <div class="card ec">
+        <h3>5. 角膜EC遊走</h3>
+        <p style="font-size:0.85em;">Yan (2024) <em>Sci Rep</em></p>
+        <ul style="font-size:0.88em;">
+          <li>TCF4-B OE: 疾患ECのみ遊走 &uarr;</li>
+          <li>EMT非依存 (TUBB4A経由)</li>
+          <li>Context-dependentモデル</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="annotation red">
+      <strong>文献ギャップ</strong>: TCF4と肺高血圧・右心室生物学を直接関連付ける論文は<strong>存在しない</strong> &rarr; 本プロジェクトが直接埋める
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 8: EMT/EndMT ===== -->
+<div class="slide" id="slide-8">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">8 / 15</span>
+      <h2>6. EMT/EndMTにおける役割</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <h3>TCF4のEMT制御</h3>
+        <ul>
+          <li>E-box経由でE-cadherin (CDH1) を<strong>間接的に抑制</strong></li>
+          <li><strong>ZEB1</strong>をダウンストリームエフェクターとして誘導</li>
+          <li>TCF4自体がSnail1/Snail2/E47の下流ターゲット</li>
+          <li>&rarr; EMT転写因子階層内に位置</li>
+        </ul>
+      </div>
+      <div class="card highlight">
+        <h3>TCF4-TGF&beta; フィードバックループ</h3>
+        <div class="flow-diagram" style="flex-direction: column; gap:6px; margin:8px 0;">
+          <div class="flow-box pos" style="min-width:auto; padding:8px 16px; font-size:0.85em;">正常: TCF4高 &rarr; TGF&beta;を直接抑制 &rarr; EndMT抑制</div>
+          <div style="font-size:1.2em; color:var(--muted);">&darr;</div>
+          <div class="flow-box neu" style="min-width:auto; padding:8px 16px; font-size:0.85em;">病態: TCF4低下 &rarr; TGF&beta;脱抑制 &rarr; 活性化</div>
+          <div style="font-size:1.2em; color:var(--muted);">&darr;</div>
+          <div class="flow-box neg" style="min-width:auto; padding:8px 16px; font-size:0.85em;">増悪: TGF&beta;活性化 &rarr; さらにTCF4抑制 &rarr; EndMT進行</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card rv-card">
+        <h3>Dual-Program: EMT vs 非EMT遊走</h3>
+        <table>
+          <tr><th>プログラム</th><th>メカニズム</th><th>コンテキスト</th></tr>
+          <tr><td><strong>EMT/EndMT</strong></td><td>CDH1抑制, ZEB1誘導, 間葉系活性化</td><td>内皮リモデリング</td></tr>
+          <tr><td><strong>微小管</strong></td><td>TUBB4A &uarr;, チューブリン修飾</td><td>EC遊走 (EMT非依存)</td></tr>
+        </table>
+        <p style="font-size:0.85em; color:var(--rv-color); margin-top:8px; font-weight:600;">
+          本プロジェクトの「Dual-Program Context-Dependent」モデルと直接一致
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 9: Target Genes ===== -->
+<div class="slide" id="slide-9">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">9 / 15</span>
+      <h2>7. 標的遺伝子と制御ネットワーク</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <h3>ChIP/CUT&amp;RUN確認済み直接標的</h3>
+        <table>
+          <tr><th>標的</th><th>方向</th><th>コンテキスト</th></tr>
+          <tr><td>TGF&beta;1, SNAI1, TGF&beta;R1, SNAI2</td><td style="color:var(--ec-color);">抑制</td><td>内皮細胞 (Xian 2025)</td></tr>
+          <tr><td>VEGFR2 (Flk1)</td><td style="color:var(--ec-color);">抑制</td><td>内皮細胞 (Tanaka 2010)</td></tr>
+          <tr><td>CDH1 (E-cadherin)</td><td style="color:var(--ec-color);">抑制</td><td>EMT</td></tr>
+          <tr><td>ZEB1</td><td style="color:var(--accent);">誘導</td><td>EMT</td></tr>
+          <tr><td>TUBB4A</td><td style="color:var(--accent);">上方制御</td><td>角膜EC遊走</td></tr>
+          <tr><td>NRXN1 (Neurexin)</td><td style="color:var(--ec-color);">抑制</td><td>ニューロン</td></tr>
+          <tr><td>PLXNA2, DCX</td><td style="color:var(--accent);">活性化</td><td>神経 (SOX11と)</td></tr>
+          <tr><td>E2F/MYC標的群</td><td style="color:var(--accent);">活性化</td><td>神経芽腫</td></tr>
+        </table>
+      </div>
+      <div class="card rv-card">
+        <h3>本プロジェクト: pySCENIC Targets</h3>
+        <p style="font-size:0.85em; margin-bottom:8px;">Motif-verified 15遺伝子 (Human RV EC)</p>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:4px; font-size:0.88em;">
+          <span><strong>APLNR</strong></span><span>ARHGAP18</span><span>ARHGAP29</span>
+          <span>BCAM</span><span><strong>CD34</strong></span><span>DCHS1</span>
+          <span>FYN</span><span>GNAI2</span><span>KLHL5</span>
+          <span>MGLL</span><span>NEURL1B</span><span><strong>PDGFB</strong></span>
+          <span>SH2D3C</span><span>TCF4</span><span>TNFAIP8L1</span>
+        </div>
+        <div class="annotation purple" style="margin-bottom:0; margin-top:10px;">
+          これらはXian et al.のCUT&amp;RUN標的とは異なる新規セット &rarr; <strong>相互補完的</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>TCF4が関与する10のシグナル経路</h3>
+      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:4px; font-size:0.88em;">
+        <span>1. <strong>EMT/EndMT</strong>: CDH1抑制, ZEB1誘導</span>
+        <span>2. <strong>TGF&beta;</strong>: 直接的転写抑制</span>
+        <span>3. <strong>微小管動態</strong>: TUBB4A, チューブリン修飾</span>
+        <span>4. <strong>E2F-FOXM1</strong>: 細胞周期</span>
+        <span>5. <strong>MYC</strong>: HDAC2/SKP1リクルート</span>
+        <span>6. <strong>BMP-Id軸</strong>: TCF4阻害</span>
+        <span>7. <strong>Ca2+/CaM</strong>: DNA結合制御</span>
+        <span>8. <strong>Wnt</strong>: &beta;-catenin/TCF7L2競合</span>
+        <span>9. <strong>軸索ガイダンス</strong>: Plexin/Semaphorin</span>
+        <span>10. <strong>VEGF</strong>: VEGFR2プロモーター抑制</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 10: Id Proteins ===== -->
+<div class="slide" id="slide-10">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">10 / 15</span>
+      <h2>8. Id タンパク質との相互作用</h2>
+    </div>
+
+    <div class="flow-diagram" style="margin: 20px 0;">
+      <div class="flow-box pos" style="font-size:0.88em;">
+        <strong>BMP シグナル</strong>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-box neu" style="font-size:0.88em;">
+        <strong>Id1/2/3 &uarr;</strong><br>
+        <span style="font-size:0.85em;">(Class V HLH)</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-box neg" style="font-size:0.88em;">
+        <strong>Id が TCF4 を隔離</strong><br>
+        <span style="font-size:0.85em;">DNA結合阻害</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-box pos" style="font-size:0.88em;">
+        <strong>VEGFR2 脱抑制</strong><br>
+        <span style="font-size:0.85em;">血管新生促進</span>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <h3>Id-E2-2軸: トグルスイッチ</h3>
+        <table>
+          <tr><th>状態</th><th>優位因子</th><th>結果</th></tr>
+          <tr><td>E2-2 (TCF4) 優位</td><td>VEGFR2抑制</td><td><strong>抗血管新生</strong></td></tr>
+          <tr><td>Id1 優位</td><td>E2-2隔離</td><td><strong>血管新生促進</strong></td></tr>
+        </table>
+        <ul style="margin-top:8px; font-size:0.88em;">
+          <li>Id1/Id3二重KO: 血管欠損で胎生致死</li>
+          <li>Id蛋白はEndMTも制御: SNAIL vs ID のバランス</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Id4の特殊な役割</h3>
+        <ul>
+          <li>Id4はId1/2/3の<strong>阻害因子</strong></li>
+          <li>&rarr; 逆説的にTCF4のDNA結合を<strong>回復</strong></li>
+          <li>Id4 OE: Id1/2/3存在下でもE47媒介転写を回復</li>
+        </ul>
+        <div class="annotation blue" style="margin-bottom:0; margin-top:10px;">
+          <strong>RVへの含意</strong>: 圧負荷RVでId媒介阻害が変動 &rarr; TCF4活性の脱抑制 &rarr; リモデリング駆動。またはTCF4低下 &rarr; EndMT進行。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 11: Immune ===== -->
+<div class="slide" id="slide-11">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">11 / 15</span>
+      <h2>9. 免疫系における役割</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card immune">
+        <h3><span class="tag immune">免疫</span> pDCマスターレギュレーター</h3>
+        <ul>
+          <li>E2-2/TCF4: pDC発生・アイデンティティの<strong>マスターレギュレーター</strong></li>
+          <li>E2-2除去 &rarr; cDC様細胞への自発的変換</li>
+          <li>E2-2高発現pDC: IFN-&alpha;産生 &uarr;</li>
+          <li>E2-2低発現pDC: IFN低下, 共刺激分子 &uarr;</li>
+          <li>TNF-&alpha; &rarr; E2-2発現低下 &rarr; 自然免疫 &rarr; 適応免疫への遷移</li>
+        </ul>
+      </div>
+      <div class="card immune">
+        <h3><span class="tag immune">最新</span> DC2A/DC2B系統</h3>
+        <ul>
+          <li>TCF4とKLF4がDC2A/DC2B系統を制御</li>
+          <li><em>Nature Immunology</em> 2025 (Zhu et al.)</li>
+        </ul>
+        <div class="annotation" style="margin-top:16px; margin-bottom:0;">
+          TCF4は「細胞アイデンティティ維持」のマスター因子として、pDC・EC・メラノーマなど<strong>異なる細胞種で繰り返し同定される</strong> &rarr; 普遍的なidentity gene
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 12: Section Divider - Project ===== -->
+<div class="slide section-divider" id="slide-12" style="background: linear-gradient(135deg, #2b6cb0 0%, #805ad5 100%);">
+  <h2>本プロジェクトへの示唆</h2>
+  <p>16本の文献が支持するRV EC TCF4仮説</p>
+</div>
+
+<!-- ===== SLIDE 13: Project Implications ===== -->
+<div class="slide" id="slide-13">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">13 / 15</span>
+      <h2>10. 文献エビデンスと本プロジェクトの対応</h2>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>文献エビデンス</th>
+          <th>論文</th>
+          <th>本プロジェクトとの対応</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>TCF4はEndMT抑制 &rarr; EC identity維持</td><td>Xian 2025 <em>NAR</em></td><td>TCF4 regulon: Reduced RV ECで d=+0.420</td></tr>
+        <tr><td>TCF4-Bは疾患ECのみ遊走促進</td><td>Yan 2024 <em>Sci Rep</em></td><td>Dual-Program Context-Dependentモデルと一致</td></tr>
+        <tr><td>TCF4はECM + 遊走を同時制御</td><td>複数論文</td><td>ECM+Migration同時駆動と一致</td></tr>
+        <tr><td>TCF4はHAND2と二量体化</td><td>Aljouda 2024</td><td style="color:var(--rv-color); font-weight:600;">HAND2はRV発生に必須 &rarr; RV特異性の基盤</td></tr>
+        <tr><td>TCF4はTWIST1と二量体化</td><td>Aljouda 2024</td><td>TWIST1 = 心臓EndMTマスター因子</td></tr>
+        <tr><td>Id-E2-2軸が血管新生を制御</td><td>Tanaka 2010 <em>Blood</em></td><td>Id変動 &rarr; TCF4活性調節</td></tr>
+        <tr><td>LV心不全でTCF4低下</td><td>Xian 2025 <em>NAR</em></td><td style="color:var(--rv-color); font-weight:600;">RVデータ = 世界初 &rarr; LVとの差異解明</td></tr>
+        <tr><td>APLNRがSSc ECの傷害マーカー</td><td>Huang 2024</td><td style="color:var(--rv-color); font-weight:600;">APLNR = TCF4 regulon target &rarr; cross-disease</td></tr>
+      </tbody>
+    </table>
+
+    <div class="conclusion-box" style="margin-top:16px;">
+      <h3>本プロジェクトが埋める6つの文献ギャップ</h3>
+      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:6px;">
+        <span>1. <strong>TCF4とRV不全</strong>: 先行研究なし</span>
+        <span>2. <strong>TCF4と肺高血圧</strong>: 先行研究なし</span>
+        <span>3. <strong>TCF4-APLNR制御</strong>: 直接報告なし</span>
+        <span>4. <strong>RV vs LV特異性</strong>: Xian=LVのみ</span>
+        <span>5. <strong>種間TCF4解析</strong>: 前例なし</span>
+        <span>6. <strong>Dual-Programモデル</strong>: 新規概念</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 14: Dual Nature ===== -->
+<div class="slide" id="slide-14">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">14 / 15</span>
+      <h2>TCF4の二面性: 防御因子 vs リモデリング駆動因子</h2>
+    </div>
+
+    <div class="card-row">
+      <div class="card" style="border:2px solid var(--shared-color); background:#f0fff4;">
+        <h3 style="color:var(--shared-color);">防御的側面</h3>
+        <ul>
+          <li>Xian et al.: TCF4 KD &rarr; EndoMT &rarr; EC dysfunction</li>
+          <li>TCF4 = <strong>EC identity維持に必須</strong></li>
+          <li>TGF&beta;経路を直接抑制</li>
+          <li>TCF4 OE &rarr; フィードバック遮断 &rarr; rescue</li>
+        </ul>
+      </div>
+      <div class="card" style="border:2px solid var(--novel-color); background:#faf5ff;">
+        <h3 style="color:var(--novel-color);">リモデリング駆動側面</h3>
+        <ul>
+          <li>Reduced RV ECでTCF4 regulon<strong>活性化</strong></li>
+          <li>FECD: 疾患ECのみでTCF4-B OE &rarr; 遊走促進</li>
+          <li>ECM + 遊走プログラム同時駆動</li>
+          <li>Context-dependent activation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="annotation green">
+      <strong>この2つは矛盾しない</strong>: 正常時は<strong>EC identity維持 (防御的)</strong>、疾患ストレス下では<strong>リモデリングプログラムも駆動 (文脈依存的)</strong> &mdash; これが<strong>Dual-Programモデル</strong>の本質。
+    </div>
+
+    <div class="card rv-card">
+      <h3>本プロジェクトの決定的優位性</h3>
+      <div class="card-row" style="margin-bottom:0;">
+        <div style="flex:1;">
+          <p style="font-weight:600; color:var(--lv-color); margin-bottom:6px;">Xian et al. (bulk)</p>
+          <p style="font-size:0.88em;">"全体としてTCF4が低下" としか見えない</p>
+        </div>
+        <div style="flex:0; padding:0 12px; font-size:1.5em; color:var(--muted); display:flex; align-items:center;">vs</div>
+        <div style="flex:1;">
+          <p style="font-weight:600; color:var(--rv-color); margin-bottom:6px;">本プロジェクト (scRNA-seq)</p>
+          <p style="font-size:0.88em;"><strong>EC集団内の不均一性</strong>を可視化:<br>
+          TCF4<sup>high</sup> = 代償的「抵抗EC」<br>
+          TCF4<sup>low</sup> = EndMT進行中のEC</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 15: References Summary ===== -->
+<div class="slide" id="slide-15">
+  <div class="content-slide">
+    <div class="slide-header">
+      <span class="slide-num">15 / 15</span>
+      <h2>参考文献 &amp; PDF収集状況</h2>
+    </div>
+
+    <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="stat-box" style="border-top:4px solid var(--shared-color);">
+        <div class="label">収集済みPDF</div>
+        <div class="value" style="color:var(--shared-color);">16本</div>
+        <div class="sub">精読・統合済み</div>
+      </div>
+      <div class="stat-box" style="border-top:4px solid var(--lv-color);">
+        <div class="label">未収集 (Paywall)</div>
+        <div class="value" style="color:var(--lv-color);">6本</div>
+        <div class="sub">大学図書館で取得推奨</div>
+      </div>
+      <div class="stat-box" style="border-top:4px solid var(--accent);">
+        <div class="label">最重要論文</div>
+        <div class="value" style="color:var(--accent); font-size:1.2em;">Xian 2025</div>
+        <div class="sub">NAR &bull; TCF4-EndMT-心不全</div>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <h3>最重要 3論文</h3>
+        <table style="font-size:0.85em;">
+          <tr><td><strong>Xian 2025</strong> <em>NAR</em></td><td>TCF4-EndMT-心不全</td><td><span class="tag ec">EC</span></td></tr>
+          <tr><td><strong>Tanaka 2010</strong> <em>Blood</em></td><td>E2-2/Id1 EC基盤論文</td><td><span class="tag ec">EC</span></td></tr>
+          <tr><td><strong>Pozniak 2024</strong> <em>Cell</em></td><td>TCF4 MESマスターReg</td><td><span class="tag cancer">Cancer</span></td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>領域分布</h3>
+        <table style="font-size:0.85em;">
+          <tr><td><span class="tag ec">内皮/血管</span></td><td>Xian, Tanaka, Huang, Yan, Wakabayashi</td></tr>
+          <tr><td><span class="tag neuro">神経</span></td><td>Schoof, D'Rozario, Wittmann, Quednow</td></tr>
+          <tr><td><span class="tag cancer">がん</span></td><td>Aljouda, Pozniak, Shin</td></tr>
+          <tr><td><span class="tag immune">免疫</span></td><td>Zhu</td></tr>
+          <tr><td>レビュー</td><td>Forrest, Savchenko, Sozanska, Sepp, Roschger</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="conclusion-box">
+      <h3>Overall Conclusion</h3>
+      <ul>
+        <li>TCF4は<strong>神経・免疫・内皮・がん</strong>にまたがる多面的ハブ型TF</li>
+        <li>心臓ECにおける役割は2025年に確立 (Xian et al. <em>NAR</em>)、ただし<strong>LVのみ</strong></li>
+        <li>本プロジェクトは<strong>RV心不全でのTCF4</strong>を世界初で示す</li>
+        <li>文献16本が仮説を多方面から支持: <strong>TCF4はRV EC リモデリングの鍵</strong></li>
+        <li>HAND2二量体化, APLNR制御, Cross-species比較 &rarr; 明確なNovelty</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<div class="nav">
+  <button onclick="changeSlide(-1)" id="prevBtn" disabled>&larr; Prev</button>
+  <div style="text-align:center;">
+    <div class="dots" id="dots"></div>
+    <div class="progress" id="progress">1 / 16</div>
+  </div>
+  <button onclick="changeSlide(1)" id="nextBtn">Next &rarr;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  const total = slides.length;
+  const dotsContainer = document.getElementById('dots');
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === total - 1;
+    document.getElementById('progress').textContent = (current + 1) + ' / ' + total;
+  }
+  function changeSlide(dir) { goToSlide(current + dir); }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (current < total - 1) changeSlide(1); }
+    if (e.key === 'ArrowLeft') { if (current > 0) changeSlide(-1); }
+  });
+</script>
+
+</body>
+</html>
